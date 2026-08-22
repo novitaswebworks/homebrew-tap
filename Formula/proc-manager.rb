@@ -22,7 +22,7 @@ class ProcManager < Formula
 
   def install
     bin.install "proc-manager"
-    bin.install_symlink "proc-manager" => "nova"
+    bin.install_symlink "proc-manager" => "nman"
   end
 
   test do
