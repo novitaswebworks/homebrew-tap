@@ -5,18 +5,18 @@ class ProcManager < Formula
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/novitaswebworks/proc-manager/releases/download/1.3.0/proc-manager-macos-arm64.tar.gz"
-      sha256 "0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
+      url "https://github.com/novitaswebworks/proc-manager/releases/download/v1.3.0/proc-manager-macos-arm64.tar.gz"
+      sha256 "e74be9d41feb7cd39615ac0a1911781544467fec70bb0ff8653fd2f449a32cd6"
     else
-      url "https://github.com/novitaswebworks/proc-manager/releases/download/1.3.0/proc-manager-macos-x86_64.tar.gz"
-      sha256 "0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
+      url "https://github.com/novitaswebworks/proc-manager/releases/download/v1.3.0/proc-manager-macos-x86_64.tar.gz"
+      sha256 "a0f86730be262d1b4d43955ce4510982b4091d9d22aa7e3ad54718a9a146d146"
     end
   end
 
   on_linux do
     if Hardware::CPU.intel?
-      url "https://github.com/novitaswebworks/proc-manager/releases/download/1.3.0/proc-manager-linux-x86_64.tar.gz"
-      sha256 "0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
+      url "https://github.com/novitaswebworks/proc-manager/releases/download/v1.3.0/proc-manager-linux-x86_64.tar.gz"
+      sha256 "5eaeeb5a8a310e4596fd0797cd06cc29086433ea4024ac953f7f3c06fc50bb57"
     end
   end
 
