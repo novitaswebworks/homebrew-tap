@@ -37,7 +37,7 @@ jobs:
         id: sha
         run: |
           VERSION="${{ steps.vars.outputs.VERSION }}"
-          URL="https://github.com/novitaswebworks/novaterm/releases/download/v${VERSION}/NovaTerm_${VERSION}_aarch64.dmg"
+          URL="https://github.com/lordbobby-dot/novaterm/releases/download/v${VERSION}/NovaTerm_${VERSION}_universal.dmg"
           echo "Downloading $URL ..."
           curl -sSL -o novaterm.dmg "$URL"
           SHA=$(shasum -a 256 novaterm.dmg | awk '{print $1}')
