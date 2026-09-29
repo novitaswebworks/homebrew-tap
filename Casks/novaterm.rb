@@ -1,6 +1,6 @@
 cask "novaterm" do
-  version "1.4.0"
-  sha256 "5c4a852d73f760250461be86915c44e7dc7ef0a521920a4bf68dcf9c8c21d5bd"
+  version "2.0.0"
+  sha256 "c5e38ba93e62501f8d46935d8c2059567436a7ab4f049b62d92454ae2ab17dcd"
 
   url "https://github.com/lordbobby-dot/novaterm/releases/download/v#{version}/NovaTerm_#{version}_universal.dmg",
       verified: "github.com/lordbobby-dot/novaterm/"
