@@ -2,7 +2,7 @@ cask "novaterm" do
   version "2.0.1"
   sha256 "07ddb4cff975860f12efd7f617cd97d8e5363df1998c5cd66059abd8b263bbb1"
 
-  url "https://github.com/lordbobby-dot/novaterm/releases/download/v#{version}/NovaTerm_#{version}_universal.dmg"
+  url "https://github.com/novitaswebworks/novaterm/releases/download/v#{version}/NovaTerm_#{version}_universal.dmg"
 
   name "NovaTerm"
   desc "AI-native terminal with built-in editor, local AI inference, and ghost-text predictions"
