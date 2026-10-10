@@ -1,15 +1,19 @@
 name: Update Cask
 
-# Triggered by the desktop app repo via repository_dispatch
+# Triggered by novaterm or appguard via repository_dispatch
 # OR manually for testing
 on:
   repository_dispatch:
-    types: [app-released]
+    types: [app-released, appguard-released]
 
   workflow_dispatch:
     inputs:
+      app:
+        description: "Application name ('appguard' or 'novaterm')"
+        required: true
+        default: "appguard"
       version:
-        description: "Version to update (e.g. 1.3.0)"
+        description: "Version to update (e.g. 0.4.0)"
         required: true
 
 permissions:
@@ -24,41 +28,66 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Resolve version
+      - name: Resolve app and version
         id: vars
         run: |
           if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
-            echo "VERSION=${{ github.event.client_payload.version }}" >> "$GITHUB_OUTPUT"
+            EVENT_TYPE="${{ github.event.action }}"
+            if [ "$EVENT_TYPE" = "appguard-released" ]; then
+              APP="appguard"
+            elif [ "${{ github.event.client_payload.app }}" != "" ]; then
+              APP="${{ github.event.client_payload.app }}"
+            else
+              APP="novaterm"
+            fi
+            VERSION="${{ github.event.client_payload.version }}"
           else
-            echo "VERSION=${{ inputs.version }}" >> "$GITHUB_OUTPUT"
+            APP="${{ inputs.app }}"
+            VERSION="${{ inputs.version }}"
           fi
+
+          echo "APP=$APP" >> "$GITHUB_OUTPUT"
+          echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Processing $APP v$VERSION"
 
       - name: Download DMG and compute SHA256
         id: sha
         run: |
+          APP="${{ steps.vars.outputs.APP }}"
           VERSION="${{ steps.vars.outputs.VERSION }}"
-          URL="https://github.com/novitaswebworks/novaterm/releases/download/v${VERSION}/NovaTerm_${VERSION}_universal.dmg"
+
+          if [ "$APP" = "appguard" ]; then
+            URL="https://github.com/novitaswebworks/appguard/releases/download/v${VERSION}/AppGuard_${VERSION}_universal.dmg"
+          else
+            URL="https://github.com/novitaswebworks/novaterm/releases/download/v${VERSION}/NovaTerm_${VERSION}_universal.dmg"
+          fi
+
           echo "Downloading $URL ..."
-          curl -sSL -o novaterm.dmg "$URL"
-          SHA=$(shasum -a 256 novaterm.dmg | awk '{print $1}')
+          curl -sSL -o app.dmg "$URL"
+          SHA=$(shasum -a 256 app.dmg | awk '{print $1}')
           echo "SHA256=$SHA" >> "$GITHUB_OUTPUT"
           echo "SHA256 = $SHA"
 
       - name: Update Cask formula
         run: |
+          APP="${{ steps.vars.outputs.APP }}"
           VERSION="${{ steps.vars.outputs.VERSION }}"
           SHA="${{ steps.sha.outputs.SHA256 }}"
+          CASK_FILE="Casks/${APP}.rb"
+
           # Update version
-          sed -i '' "s/version \"[^\"]*\"/version \"${VERSION}\"/" Casks/novaterm.rb
-          # Replace sha256 line (handles both :no_check and real hashes)
-          sed -i '' "s/sha256 .*/sha256 \"${SHA}\"/" Casks/novaterm.rb
-          echo "Updated Casks/novaterm.rb to v${VERSION} sha256=${SHA}"
-          cat Casks/novaterm.rb
+          sed -i '' "s/version \"[^\"]*\"/version \"${VERSION}\"/" "$CASK_FILE"
+          # Replace sha256 line
+          sed -i '' "s/sha256 .*/sha256 \"${SHA}\"/" "$CASK_FILE"
+          echo "Updated $CASK_FILE to v${VERSION} sha256=${SHA}"
+          cat "$CASK_FILE"
 
       - name: Commit and push
         run: |
+          APP="${{ steps.vars.outputs.APP }}"
+          VERSION="${{ steps.vars.outputs.VERSION }}"
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add Casks/novaterm.rb
-          git diff --staged --quiet || git commit -m "chore: update novaterm to v${{ steps.vars.outputs.VERSION }}"
+          git add "Casks/${APP}.rb"
+          git diff --staged --quiet || git commit -m "chore: update ${APP} to v${VERSION}"
           git push
