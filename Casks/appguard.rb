@@ -1,6 +1,6 @@
 cask "appguard" do
-  version "0.7.0"
-  sha256 "938bd310414a2423979815364f06211fd787cfd64027f0b19f8170fa27c828b1"
+  version "0.8.0"
+  sha256 "154dde055c1b1683a4eb90727f8ba8308ac0383c865bff7055f9089bcb3894d6"
 
   url "https://github.com/novitaswebworks/appguard/releases/download/v#{version}/AppGuard_#{version}_universal.dmg"
 
