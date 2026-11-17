@@ -2,7 +2,7 @@
 # Formula/jobi.rb); this copy is the source of truth. See packaging/homebrew/README.md.
 #
 # Prebuilt release binaries are used where they exist (small, fast install, no build tools).
-# Platforms without one build from source with Rust instead.
+# Linux arm64 has none yet and builds from source with Rust instead.
 class Jobi < Formula
   desc "Local-first job application tracker for your terminal"
   homepage "https://github.com/novitaswebworks/jobi"
@@ -15,27 +15,25 @@ class Jobi < Formula
 
   on_macos do
     on_arm do
-      url "https://github.com/novitaswebworks/jobi/releases/download/v0.2.0/jobi-v0.2.0-macos-arm64.tar.gz"
-      sha256 "1cc92fced3f712daa26c5bd125a9a85a7343e98d72204ab3802058a1cc1c18e3"
+      url "https://github.com/novitaswebworks/jobi/releases/download/v0.3.0/jobi-v0.3.0-macos-arm64.tar.gz"
+      sha256 "d0864e4b6aff6f1b67017c912984b97c0bc5260b180b3f4e2cdcad7efa495554"
     end
     on_intel do
-      # No prebuilt binary for this platform in v0.2.0: build from source.
-      url "https://github.com/novitaswebworks/jobi/archive/refs/tags/v0.2.0.tar.gz"
-      sha256 "36a9e6cf06017db26079d4622e8e1c04e6ef50946d6f6ee6dded766718eef20a"
-      depends_on "rust" => :build
+      url "https://github.com/novitaswebworks/jobi/releases/download/v0.3.0/jobi-v0.3.0-macos-x86_64.tar.gz"
+      sha256 "86cdf55be050a8e821144a9ef2f0c0545cef594df17a5fe48263afb7c9a0af87"
     end
   end
 
   on_linux do
     on_arm do
-      # No prebuilt binary for this platform in v0.2.0: build from source.
-      url "https://github.com/novitaswebworks/jobi/archive/refs/tags/v0.2.0.tar.gz"
-      sha256 "36a9e6cf06017db26079d4622e8e1c04e6ef50946d6f6ee6dded766718eef20a"
+      # No prebuilt binary for this platform yet: build from source.
+      url "https://github.com/novitaswebworks/jobi/archive/refs/tags/v0.3.0.tar.gz"
+      sha256 "ead3d184de55719f7bf2332a218cc3ae58a3eb6b420a0f5877ba7377ebabdcca"
       depends_on "rust" => :build
     end
     on_intel do
-      url "https://github.com/novitaswebworks/jobi/releases/download/v0.2.0/jobi-v0.2.0-linux-x86_64.tar.gz"
-      sha256 "1b5ecc34e65b9e2427511b4e494217a2161c1232ab8d1705ad61ebb56df6d906"
+      url "https://github.com/novitaswebworks/jobi/releases/download/v0.3.0/jobi-v0.3.0-linux-x86_64.tar.gz"
+      sha256 "4a92164e181abb70e82aeeba3d3e3b2138dc768f92b2457e8bbe8506b34445ba"
     end
   end
 
