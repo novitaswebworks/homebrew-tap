@@ -6,7 +6,6 @@
 class Jobi < Formula
   desc "Local-first job application tracker for your terminal"
   homepage "https://github.com/novitaswebworks/jobi"
-  version "0.2.0"
   license "MIT"
 
   head do
