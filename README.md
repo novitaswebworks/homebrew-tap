@@ -32,3 +32,11 @@ brew uninstall --zap --cask novaterm
 ## Auto-updating the formula
 
 This tap's Cask formula is **automatically updated** by a GitHub Actions workflow whenever a new NovaTerm release is published. The version and SHA256 checksum are updated without any manual intervention.
+
+## Jobi
+
+[Jobi](https://github.com/novitaswebworks/jobi) is a local-first job application tracker for your terminal.
+
+```sh
+brew install novitaswebworks/tap/jobi
+```
